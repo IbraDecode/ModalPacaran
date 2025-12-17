@@ -1,0 +1,80 @@
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { GlassCard } from '@/components/GlassCard';
+import Button from '@/components/Button';
+import { useAppStore } from '@/app/store';
+import MobileShell from '@/components/MobileShell';
+import BottomNav from '@/components/BottomNav';
+
+const SettingsScreen = () => {
+  const profile = useAppStore((s) => s.profile);
+  const setProfile = useAppStore((s) => s.setProfile);
+  const setFlags = useAppStore((s) => s.setFlags);
+  const setRoom = useAppStore((s) => s.setRoom);
+  const theme = useAppStore((s) => s.theme);
+  const setTheme = useAppStore((s) => s.setTheme);
+  const navigate = useNavigate();
+  const [name, setName] = useState(profile.name);
+  const [targetName, setTargetName] = useState(profile.targetName);
+  const [targetAmount, setTargetAmount] = useState(profile.targetAmount);
+
+  return (
+    <MobileShell
+      header={
+        <div className="flex justify-between items-center">
+          <h1 className="text-xl font-semibold">Settings</h1>
+          <Link to="/home" className="text-sm text-[var(--text-secondary)]">
+            Tutup
+          </Link>
+        </div>
+      }
+      footer={<BottomNav />}
+    >
+      <GlassCard className="space-y-3 bg-[var(--surface)]">
+        <label className="space-y-1 block text-sm text-[var(--text-secondary)]">
+          Nama panggilan
+          <input className="w-full rounded-2xl bg-[var(--surface)] border border-[var(--border)] px-3 py-3" value={name} onChange={(e) => setName(e.target.value)} />
+        </label>
+        <label className="space-y-1 block text-sm text-[var(--text-secondary)]">
+          Target
+          <input className="w-full rounded-2xl bg-[var(--surface)] border border-[var(--border)] px-3 py-3" value={targetName} onChange={(e) => setTargetName(e.target.value)} />
+          <input
+            type="number"
+            className="w-full rounded-2xl bg-[var(--surface)] border border-[var(--border)] px-3 py-3"
+            value={targetAmount}
+            onChange={(e) => setTargetAmount(Number(e.target.value))}
+          />
+        </label>
+        <div className="flex items-center justify-between text-sm text-[var(--text-secondary)]">
+          <span>Mode</span>
+          <button
+            className="rounded-full border border-[var(--border)] px-4 py-2 text-xs"
+            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+          >
+            {theme === 'dark' ? 'Gelap' : 'Terang'}
+          </button>
+        </div>
+        <Button
+          className="w-full"
+          onClick={() => {
+            setProfile({ name, targetName, targetAmount });
+          }}
+        >
+          Simpan
+        </Button>
+        <Button
+          className="w-full bg-[var(--error)]"
+          onClick={() => {
+            setFlags({ roomId: undefined });
+            setRoom(undefined);
+            navigate('/start');
+          }}
+        >
+          Leave room
+        </Button>
+      </GlassCard>
+    </MobileShell>
+  );
+};
+
+export default SettingsScreen;
