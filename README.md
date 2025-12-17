@@ -1,2 +1,26 @@
 # ModalPacaran
-ModalPacaran - aplikasi nabung berdua yang sengaja cuma buat 2 orang. Tanpa login, tanpa drama, realtime. Kalau lo setor: keitung. Kalau lo bolong: keliatan. Bukan fintech. Bukan sosial. Nggak ngemis engagement. Cuma alat kecil biar kalian konsisten bareng.
+
+Aplikasi nabung berdua dengan realtime Firebase RTDB + offline queue. Tidak ada login, cuma deviceId.
+
+## Jalankan lokal
+
+```bash
+npm install
+npm run dev
+```
+
+Buka http://localhost:5173
+
+## Build
+
+```bash
+npm run build
+npm run preview
+```
+
+## Testing
+
+```bash
+npm test
+```
+
